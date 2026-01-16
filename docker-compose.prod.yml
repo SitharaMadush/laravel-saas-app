@@ -1,5 +1,6 @@
 services:
   php:
+    user: "${UID}:${GID}"
     build: .
     container_name: saas-app
     restart: unless-stopped
@@ -10,13 +11,26 @@ services:
       - core
       - proxy
 
+  node-build:
+    image: node:20
+    container_name: saas-app-node
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    # optional:
+    # environment:
+    #   - NODE_ENV=production
+    command: sh -lc "npm install && npm run build"
+    networks:
+      - proxy
+
   nginx:
     image: nginx:alpine
     container_name: saas-app-nginx
     restart: unless-stopped
     volumes:
       - ./:/var/www/html
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker-prod/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
     networks:
@@ -30,16 +44,17 @@ services:
       - traefik.docker.network=proxy
 
       # Router: domain for your API
-      - traefik.http.routers.expense_api.rule=Host(`saas-app.madush.dev`)
-      - traefik.http.routers.expense_api.entrypoints=websecure
-      - traefik.http.routers.expense_api.tls=true
-      - traefik.http.routers.expense_api.tls.certresolver=le
+      - traefik.http.routers.saas_app.rule=Host(`saas-app.madush.dev`)
+      - traefik.http.routers.saas_app.entrypoints=websecure
+      - traefik.http.routers.saas_app.tls=true
+      - traefik.http.routers.saas_app.tls.certresolver=le
 
       # Service: nginx listens on port 80 internally
-      - traefik.http.services.expense_api.loadbalancer.server.port=80
+      - traefik.http.services.saas_app.loadbalancer.server.port=80
 
 networks:
   proxy:
     external: true
   core:
     external: true
+

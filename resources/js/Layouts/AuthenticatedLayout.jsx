@@ -31,29 +31,47 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Dashboard
                                 </NavLink>
                                 <NavLink
+                                    href={route("dashboard")}
+                                    active={route().current("writer")}
+                                >
+                                    Article Writer
+                                </NavLink>
+                                <NavLink
+                                    href={route("dashboard")}
+                                    active={route().current("summarize")}
+                                >
+                                    AI Summarizer
+                                </NavLink>
+                                <NavLink
                                     href={route("feature1.index")}
                                     active={route().current("feature1.index")}
                                 >
-                                    Feature 01
+                                    AI Speech to Text
                                 </NavLink>
                                 <NavLink
                                     href={route("feature2.index")}
                                     active={route().current("feature2.index")}
                                 >
-                                    Feature 02
+                                    AI Text to Speach
                                 </NavLink>
                             </div>
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center gap-3">
                             <span className="text-white flex gap-3">
-                                <img src="/img/coin.png" alt="coin image" className="w-[20px] h-[20px]" />
+                                <img
+                                    src="/img/coin.png"
+                                    alt="coin image"
+                                    className="w-[20px] h-[20px]"
+                                />
                                 {user.available_credits} Credits
                             </span>
                             <Link
-                                href={route('credit.index')}
+                                href={route("credit.index")}
                                 className="text-white py-1 px-3 rounded border transition-colors hover:text-gray-800 hover:bg-white"
-                            >Get More</Link>
+                            >
+                                Get More
+                            </Link>
                             <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -146,7 +164,6 @@ export default function AuthenticatedLayout({ header, children }) {
                         (showingNavigationDropdown ? "block" : "hidden") +
                         " sm:hidden"
                     }
-
                 >
                     <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
