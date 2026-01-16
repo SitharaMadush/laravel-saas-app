@@ -43,6 +43,7 @@ services:
       # 👇 Ensure Traefik uses the proxy network
       - traefik.docker.network=proxy
 
+
       # Router: domain for your API
       - traefik.http.routers.saas_app.rule=Host(`saas-app.madush.dev`)
       - traefik.http.routers.saas_app.entrypoints=websecure
