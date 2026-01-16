@@ -30,7 +30,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
-                                <NavLink
+                                {/* <NavLink
                                     href={route("dashboard")}
                                     active={route().current("writer")}
                                 >
@@ -41,18 +41,18 @@ export default function AuthenticatedLayout({ header, children }) {
                                     active={route().current("summarize")}
                                 >
                                     AI Summarizer
-                                </NavLink>
+                                </NavLink> */}
                                 <NavLink
                                     href={route("feature1.index")}
                                     active={route().current("feature1.index")}
                                 >
-                                    AI Speech to Text
+                                    Calculate Sum
                                 </NavLink>
                                 <NavLink
                                     href={route("feature2.index")}
                                     active={route().current("feature2.index")}
                                 >
-                                    AI Text to Speach
+                                    Calculate Difference
                                 </NavLink>
                             </div>
                         </div>
